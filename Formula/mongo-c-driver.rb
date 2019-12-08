@@ -3,7 +3,7 @@ class MongoCDriver < Formula
   homepage "https://github.com/mongodb/mongo-c-driver"
   url "https://github.com/mongodb/mongo-c-driver/releases/download/1.15.1/mongo-c-driver-1.15.1.tar.gz"
   sha256 "4ee47c146ff0059d15ab547a0c2a87f7113f063e1c625e51f8c5174853b07765"
-  head "https://github.com/mongodb/mongo-c-driver.git", :shallow => false
+  head "https://github.com/mongodb/mongo-c-driver.git"
 
   bottle do
     cellar :any
@@ -18,6 +18,10 @@ class MongoCDriver < Formula
   depends_on "sphinx-doc" => :build
 
   def install
+    cmake_args = std_cmake_args
+    if build.head?
+      cmake_args << "-DBUILD_VERSION=1.16.0-pre"
+    end
     system "cmake", ".", *std_cmake_args
     system "make", "install"
     (pkgshare/"libbson").install "src/libbson/examples"

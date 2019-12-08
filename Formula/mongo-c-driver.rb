@@ -22,7 +22,7 @@ class MongoCDriver < Formula
     if build.head?
       cmake_args << "-DBUILD_VERSION=1.16.0-pre"
     end
-    system "cmake", ".", *std_cmake_args
+    system "cmake", ".", *cmake_args
     system "make", "install"
     (pkgshare/"libbson").install "src/libbson/examples"
     (pkgshare/"libmongoc").install "src/libmongoc/examples"
